@@ -20,8 +20,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="00e150f0-2999-4aa1-99f0-a630a4374416" name="Changes" comment="Let's commit the gitignore">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+    <list default="true" id="00e150f0-2999-4aa1-99f0-a630a4374416" name="Changes" comment="Add the first version">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/keyboard.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/keyboard.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +96,7 @@
       <workItem from="1720608520370" duration="58000" />
       <workItem from="1720608588583" duration="2466000" />
       <workItem from="1720848160751" duration="354000" />
-      <workItem from="1720940689432" duration="583000" />
+      <workItem from="1720940689432" duration="2721000" />
     </task>
     <task id="LOCAL-00001" summary="Let's commit the gitignore">
       <option name="closed" value="true" />
@@ -120,7 +122,39 @@
       <option name="project" value="LOCAL" />
       <updated>1720941271331</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Let's commit the gitignore">
+      <option name="closed" value="true" />
+      <created>1720941288589</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1720941288589</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Let's commit the gitignore">
+      <option name="closed" value="true" />
+      <created>1720941325058</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1720941325058</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Update the gitignore here">
+      <option name="closed" value="true" />
+      <created>1720941388211</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1720941388211</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Add the first version">
+      <option name="closed" value="true" />
+      <created>1720941443039</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1720941443039</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -133,6 +167,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Let's commit the gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="Let's commit the gitignore" />
+    <MESSAGE value="Update the gitignore here" />
+    <MESSAGE value="Add the first version" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add the first version" />
   </component>
 </project>

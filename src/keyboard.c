@@ -54,11 +54,6 @@ void keyboardUpdateKeys() {
     if (!anyKeyPressed) {
         resetPressedKeys();
     }
-
-    // Print currently pressed keys
-    for (int i = 0; i < pressedKeysCount; ++i) {
-        printf("Key pressed: %d\n", pressedKeys[i].keyCode);
-    }
 }
 
 int getPressedKeysCount() {
