@@ -32,7 +32,7 @@ ConfigEntry* parseConfigFile(const char* filePath, int *entryCount) {
         char *keyCombination = trimWhitespace(line);
         char *command = trimWhitespace(stripComment(colonPos + 1));
 
-        ConfigEntry entry;
+        ConfigEntry entry = {0,false, false, false, ""};
         strcpy(entry.command, command);
         parseKeyCombination(&entry, keyCombination);
 
@@ -86,10 +86,17 @@ static void parseKeyCombination(ConfigEntry* entry, const char* keyCombination) 
     char* token = strtok(buffer, "+");
     int keyIndex = 0;
     while (token != NULL && keyIndex < 3) { // Assuming up to three keys
-        int vkCode = mapKeyToVirtualKeyCode(trimWhitespace(token));
-        if (keyIndex == 0) entry->key1 = vkCode;
-        else if (keyIndex == 1) entry->key2 = vkCode;
-        else if (keyIndex == 2) entry->key3 = vkCode;
+        const int vkCode = mapKeyToVirtualKeyCode(trimWhitespace(token));
+
+        if (vkCode == VK_SHIFT || vkCode == VK_LSHIFT || vkCode == VK_RSHIFT) {
+            entry->shiftKey = true;
+        } else if (vkCode == VK_CONTROL || vkCode == VK_LCONTROL || vkCode == VK_RCONTROL) {
+            entry->ctrlKey = true;
+        } else if (vkCode == VK_MENU || vkCode == VK_LMENU || vkCode == VK_RMENU) {
+            entry->altKey = true;
+        } else {
+            entry->keyCode = vkCode;
+        }
 
         token = strtok(NULL, "+");
         keyIndex++;

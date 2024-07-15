@@ -7,11 +7,6 @@ int main() {
     int entryCount = 0;
     ConfigEntry *entries = parseConfigFile("C:\\Users\\photo\\CLionProjects\\wasd_config_parser\\wasd.config", &entryCount);
 
-    // Print entries
-    for (int i = 0 ; i < entryCount; i++) {
-        printf("key1 = %d, key2 = %d, command = %s\n", entries[i].key1, entries[i].key2, entries[i].command);
-    }
-
     printf("Press 'Esc' to exit.\n");
 
     while (1) {
@@ -21,16 +16,18 @@ int main() {
             break;
         }
 
-        if (getPressedKeysCount() > 0) {
-            // Seems I do not get consistent results with key codes above
-            // when using alt, ctrl, shift, etc.
-            const int key1 = getPressedKeys()[0].keyCode;
-            const int key2 = getPressedKeysCount() > 1 ? getPressedKeys()[1].keyCode : 0;
+        const KeyState keyState = getPressedKey();
+        if (keyState.isPressed) {
+            printf("keycode = %d, isCtrlPressed = %d, isAltPressed = %d, isShiftPressed = %d\n",
+                   keyState.keyCode, keyState.isCtrlPressed, keyState.isAltPressed, keyState.isShiftPressed);
 
-            for (int i = 0; i < entryCount; i++) {
-                printf("key1 = %d, key2 = %d\n", key1, key2);
-                if (key1 == entries[i].key1 && key2 == entries[i].key2) {
-                    printf("Command: %s\n", entries[i].command);
+            // check if mapping exists in config
+            for (int i = 0 ; i < entryCount; i++) {
+                if (entries[i].keyCode == keyState.keyCode &&
+                    entries[i].altKey == keyState.isAltPressed &&
+                    entries[i].ctrlKey == keyState.isCtrlPressed &&
+                    entries[i].shiftKey == keyState.isShiftPressed) {
+                    printf("MATCHED!\n");
                 }
             }
         }

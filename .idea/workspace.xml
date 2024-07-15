@@ -20,10 +20,13 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="00e150f0-2999-4aa1-99f0-a630a4374416" name="Changes" comment="Add the first version">
+    <list default="true" id="00e150f0-2999-4aa1-99f0-a630a4374416" name="Changes" comment="Update the latest changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config_parser.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/config_parser.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config_parser.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/config_parser.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/keyboard.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/keyboard.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/keyboard.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/keyboard.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +99,7 @@
       <workItem from="1720608520370" duration="58000" />
       <workItem from="1720608588583" duration="2466000" />
       <workItem from="1720848160751" duration="354000" />
-      <workItem from="1720940689432" duration="2721000" />
+      <workItem from="1720940689432" duration="7276000" />
     </task>
     <task id="LOCAL-00001" summary="Let's commit the gitignore">
       <option name="closed" value="true" />
@@ -154,7 +157,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720941443039</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Update the latest changes">
+      <option name="closed" value="true" />
+      <created>1720943465191</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1720943465191</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -169,6 +180,7 @@
     <MESSAGE value="Let's commit the gitignore" />
     <MESSAGE value="Update the gitignore here" />
     <MESSAGE value="Add the first version" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add the first version" />
+    <MESSAGE value="Update the latest changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update the latest changes" />
   </component>
 </project>

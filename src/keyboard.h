@@ -7,10 +7,12 @@
 typedef struct {
     int keyCode;
     bool isPressed;
+    bool isCtrlPressed;
+    bool isAltPressed;
+    bool isShiftPressed;
 } KeyState;
 
 void keyboardUpdateKeys();
-int getPressedKeysCount();
-KeyState* getPressedKeys();
+KeyState getPressedKey();
 
 #endif //KEYBOARD_H
