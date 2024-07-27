@@ -3,11 +3,12 @@
 #include "src/config_parser.h"
 #include "src/keyboard.h"
 
+#define DEBOUNCE_TIME 300
+
 int main() {
     int entryCount = 0;
     ConfigEntry *entries = parseConfigFile("C:\\Users\\photo\\CLionProjects\\wasd_config_parser\\wasd.config", &entryCount);
-
-    printf("Press 'Esc' to exit.\n");
+    DWORD lastMatchTime = GetTickCount();
 
     while (1) {
         keyboardUpdateKeys();
@@ -17,16 +18,23 @@ int main() {
         }
 
         const KeyState keyState = getPressedKey();
+
         if (keyState.isPressed) {
-            printf("keycode = %d, isCtrlPressed = %d, isAltPressed = %d, isShiftPressed = %d\n",
-                   keyState.keyCode, keyState.isCtrlPressed, keyState.isAltPressed, keyState.isShiftPressed);
+            const DWORD currentTime = GetTickCount();
 
             // check if mapping exists in config
             for (int i = 0 ; i < entryCount; i++) {
+                // Debounce to prevent multiple matches
+                if (currentTime - lastMatchTime < DEBOUNCE_TIME) {
+                    continue;
+                }
+
                 if (entries[i].keyCode == keyState.keyCode &&
                     entries[i].altKey == keyState.isAltPressed &&
                     entries[i].ctrlKey == keyState.isCtrlPressed &&
                     entries[i].shiftKey == keyState.isShiftPressed) {
+
+                    lastMatchTime = GetTickCount();
                     printf("MATCHED!\n");
                 }
             }

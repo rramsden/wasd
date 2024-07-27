@@ -50,8 +50,23 @@ static int mapKeyToVirtualKeyCode(const char* key) {
     if (strcmp(key, "ctrl") == 0) return VK_CONTROL;
     else if (strcmp(key, "alt") == 0) return VK_MENU;
     else if (strcmp(key, "shift") == 0) return VK_SHIFT;
+    else if (strcmp(key, "return") == 0) return VK_RETURN;
+    else if (strcmp(key, "oem_1") == 0) return VK_OEM_1;
+    else if (strcmp(key, "oem_plus") == 0) return VK_OEM_PLUS;
+    else if (strcmp(key, "oem_comma") == 0) return VK_OEM_COMMA;
+    else if (strcmp(key, "oem_minus") == 0) return VK_OEM_MINUS;
+    else if (strcmp(key, "oem_period") == 0) return VK_OEM_PERIOD;
+    else if (strcmp(key, "oem_2") == 0) return VK_OEM_2;
+    else if (strcmp(key, "oem_3") == 0) return VK_OEM_3;
+    else if (strcmp(key, "oem_4") == 0) return VK_OEM_4;
+    else if (strcmp(key, "oem_5") == 0) return VK_OEM_5;
+    else if (strcmp(key, "oem_6") == 0) return VK_OEM_6;
+    else if (strcmp(key, "oem_7") == 0) return VK_OEM_7;
+    else if (strcmp(key, "oem_8") == 0) return VK_OEM_8;
+    else if (strcmp(key, "oem_102") == 0) return VK_OEM_102;
     else return toupper(key[0]); // Assuming single character keys are letters
 }
+
 
 static char* trimWhitespace(char* str) {
     int start = 0, end = strlen(str) - 1;
