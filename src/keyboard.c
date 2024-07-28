@@ -5,6 +5,7 @@
 
 static KeyState pressedKey;
 static bool previousKeyStates[256] = {0};
+static KeyEventCallback keyEventCallback = NULL;
 
 void resetPressedKeys() {
     pressedKey.keyCode = 0;
@@ -36,12 +37,16 @@ void keyboardUpdateKeys() {
         const bool isCurrentlyPressed = (keyState & 0x8000) != 0;
         const bool wasPreviouslyPressed = previousKeyStates[key];
 
-        // Track previous pressed keys for tracking key up
+        // Track previous pressed keys for tracking key up and resetting pressed keys
         previousKeyStates[key] = isCurrentlyPressed;
 
         if (isCurrentlyPressed) {
             anyKeyPressed = true;
             updateKeysPressed(key);
+
+            if (keyEventCallback != NULL) {
+                keyEventCallback(pressedKey);
+            }
         } else if (wasPreviouslyPressed) {
             resetPressedKeys();
         }
@@ -54,4 +59,8 @@ void keyboardUpdateKeys() {
 
 KeyState getPressedKey() {
     return pressedKey;
+}
+
+void registerKeyEventCallback(KeyEventCallback callback) {
+    keyEventCallback = callback;
 }

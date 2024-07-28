@@ -7,43 +7,41 @@
 
 static ConfigEntry *entries = NULL;
 static int entryCount = 0;
-static DWORD lastMatchTime = GetTickCount();
+static DWORD lastMatchTime = 0;
 
 void onKeyEvent(KeyState keyState) {
+    const DWORD currentTime = GetTickCount();
 
+    // check if mapping exists in config
+    for (int i = 0 ; i < entryCount; i++) {
+        // Debounce to prevent multiple matches
+        if (currentTime - lastMatchTime < DEBOUNCE_TIME) {
+            continue;
+        }
+
+        if (entries[i].keyCode == keyState.keyCode &&
+            entries[i].altKey == keyState.isAltPressed &&
+            entries[i].ctrlKey == keyState.isCtrlPressed &&
+            entries[i].shiftKey == keyState.isShiftPressed) {
+
+            lastMatchTime = GetTickCount();
+            printf("MATCHED!\n");
+        }
+    }
 }
 
 int main() {
-    DWORD lastMatchTime = GetTickCount();
+    printf("Press ESC to exit\n");
+
+    registerKeyEventCallback(onKeyEvent);
+
+    entries = parseConfigFile("../wasd.config", &entryCount);
 
     while (1) {
         keyboardUpdateKeys();
 
         if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
             break;
-        }
-
-        const KeyState keyState = getPressedKey();
-
-        if (keyState.isPressed) {
-            const DWORD currentTime = GetTickCount();
-
-            // check if mapping exists in config
-            for (int i = 0 ; i < entryCount; i++) {
-                // Debounce to prevent multiple matches
-                if (currentTime - lastMatchTime < DEBOUNCE_TIME) {
-                    continue;
-                }
-
-                if (entries[i].keyCode == keyState.keyCode &&
-                    entries[i].altKey == keyState.isAltPressed &&
-                    entries[i].ctrlKey == keyState.isCtrlPressed &&
-                    entries[i].shiftKey == keyState.isShiftPressed) {
-
-                    lastMatchTime = GetTickCount();
-                    printf("MATCHED!\n");
-                }
-            }
         }
 
         Sleep(10);

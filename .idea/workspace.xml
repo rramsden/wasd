@@ -21,7 +21,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="00e150f0-2999-4aa1-99f0-a630a4374416" name="Changes" comment="Working debounce feature">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/keyboard.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/keyboard.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/keyboard.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/keyboard.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

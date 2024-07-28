@@ -12,6 +12,9 @@ typedef struct {
     bool isShiftPressed;
 } KeyState;
 
+typedef void (*KeyEventCallback)(KeyState keyState);
+void registerKeyEventCallback(KeyEventCallback callback);
+
 void keyboardUpdateKeys();
 KeyState getPressedKey();
 
