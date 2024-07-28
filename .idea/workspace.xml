@@ -20,10 +20,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="00e150f0-2999-4aa1-99f0-a630a4374416" name="Changes" comment="First working version to match keyboard events">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="00e150f0-2999-4aa1-99f0-a630a4374416" name="Changes" comment="Working debounce feature">
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config_parser.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/config_parser.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +100,7 @@
       <workItem from="1720608588583" duration="2466000" />
       <workItem from="1720848160751" duration="354000" />
       <workItem from="1720940689432" duration="7761000" />
-      <workItem from="1722049314013" duration="2565000" />
+      <workItem from="1722049314013" duration="2676000" />
     </task>
     <task id="LOCAL-00001" summary="Let's commit the gitignore">
       <option name="closed" value="true" />
@@ -176,7 +174,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721015960132</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Working debounce feature">
+      <option name="closed" value="true" />
+      <created>1722059395393</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1722059395393</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -193,6 +199,7 @@
     <MESSAGE value="Add the first version" />
     <MESSAGE value="Update the latest changes" />
     <MESSAGE value="First working version to match keyboard events" />
-    <option name="LAST_COMMIT_MESSAGE" value="First working version to match keyboard events" />
+    <MESSAGE value="Working debounce feature" />
+    <option name="LAST_COMMIT_MESSAGE" value="Working debounce feature" />
   </component>
 </project>

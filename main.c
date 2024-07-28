@@ -5,9 +5,15 @@
 
 #define DEBOUNCE_TIME 300
 
+static ConfigEntry *entries = NULL;
+static int entryCount = 0;
+static DWORD lastMatchTime = GetTickCount();
+
+void onKeyEvent(KeyState keyState) {
+
+}
+
 int main() {
-    int entryCount = 0;
-    ConfigEntry *entries = parseConfigFile("C:\\Users\\photo\\CLionProjects\\wasd_config_parser\\wasd.config", &entryCount);
     DWORD lastMatchTime = GetTickCount();
 
     while (1) {
