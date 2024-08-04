@@ -20,11 +20,14 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="00e150f0-2999-4aa1-99f0-a630a4374416" name="Changes" comment="Working debounce feature">
+    <list default="true" id="00e150f0-2999-4aa1-99f0-a630a4374416" name="Changes" comment="First working version">
+      <change afterPath="$PROJECT_DIR$/src/window_manager.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/window_manager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/keyboard.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/keyboard.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/keyboard.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/keyboard.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wasd.config" beforeDir="false" afterPath="$PROJECT_DIR$/wasd.config" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +40,24 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;rramsden&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/rramsden/wasd.git&quot;,
+    &quot;accountId&quot;: &quot;ca604976-9ada-4783-9811-401471ceab9c&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock://C:/Users/photo/Projects/wasd/main.c" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/photo/Projects/wasd/main.c" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/photo/Projects/wasd/src/keyboard.c" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/photo/Projects/wasd/src/keyboard.h" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectApplicationVersion">
     <option name="ide" value="CLion" />
@@ -76,9 +97,9 @@
   }
 }</component>
   <component name="RunManager">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="wasd" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="wasd" TARGET_NAME="wasd" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="wasd" RUN_TARGET_NAME="wasd">
@@ -104,6 +125,7 @@
       <workItem from="1720848160751" duration="354000" />
       <workItem from="1720940689432" duration="7761000" />
       <workItem from="1722049314013" duration="2676000" />
+      <workItem from="1722761319170" duration="2469000" />
     </task>
     <task id="LOCAL-00001" summary="Let's commit the gitignore">
       <option name="closed" value="true" />
@@ -185,7 +207,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722059395393</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="First working version">
+      <option name="closed" value="true" />
+      <created>1722139540611</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1722139540611</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -196,6 +226,17 @@
     <isAutomaticFoundErrors value="true" />
     <isAutomaticReloadCMake value="true" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Let's commit the gitignore" />
     <MESSAGE value="Update the gitignore here" />
@@ -203,6 +244,7 @@
     <MESSAGE value="Update the latest changes" />
     <MESSAGE value="First working version to match keyboard events" />
     <MESSAGE value="Working debounce feature" />
-    <option name="LAST_COMMIT_MESSAGE" value="Working debounce feature" />
+    <MESSAGE value="First working version" />
+    <option name="LAST_COMMIT_MESSAGE" value="First working version" />
   </component>
 </project>

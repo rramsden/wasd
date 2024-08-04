@@ -12,10 +12,9 @@ typedef struct {
     bool isShiftPressed;
 } KeyState;
 
-typedef void (*KeyEventCallback)(KeyState keyState);
-void registerKeyEventCallback(KeyEventCallback callback);
+typedef int (*KeyEventCallback)(KeyState keyState);
 
-void keyboardUpdateKeys();
-KeyState getPressedKey();
+void registerKeyEventCallback(KeyEventCallback callback);
+void startMessageLoop();
 
 #endif //KEYBOARD_H
