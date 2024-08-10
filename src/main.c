@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <windows.h>
-#include "src/config_parser.h"
-#include "src/keyboard.h"
+#include "config_parser.h"
+#include "keyboard.h"
 
-#include "src/window_manager.h"
+#include "window_manager.h"
 
 #define DEBOUNCE_TIME 100
 

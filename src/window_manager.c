@@ -8,15 +8,15 @@ static HWND windowHandles[MAX_WINDOWS];
 static int windowCount = 0;
 static int currentWindowIndex = 0;
 
-const TCHAR* excludedApplications[] = {
+static const TCHAR* _excludedApplications[] = {
     TEXT("ApplicationFrameHost.exe"),
     TEXT("TextInputHost.exe"),
     TEXT("Explorer.EXE")
 };
 
 static BOOL _isExcludedApplication(const TCHAR* processName) {
-    for (int i = 0; i < sizeof(excludedApplications) / sizeof(TCHAR*); i++) {
-        if (_tcscmp(processName, excludedApplications[i]) == 0) {
+    for (int i = 0; i < sizeof(_excludedApplications) / sizeof(TCHAR*); i++) {
+        if (_tcscmp(processName, _excludedApplications[i]) == 0) {
             return TRUE;
         }
     }

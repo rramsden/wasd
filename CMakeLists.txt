@@ -6,4 +6,4 @@ set(CMAKE_C_STANDARD 99)
 file(GLOB SOURCES "src/*.c")
 file(GLOB HEADERS "src/*.h")
 
-add_executable(wasd main.c ${SOURCES} ${HEADERS})
+add_executable(wasd src/main.c ${SOURCES} ${HEADERS})

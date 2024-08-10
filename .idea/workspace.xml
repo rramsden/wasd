@@ -20,13 +20,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="00e150f0-2999-4aa1-99f0-a630a4374416" name="Changes" comment="Use pthread to invoke a new thread for keyboard proc">
-      <change beforePath="$PROJECT_DIR$/.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/editor.xml" afterDir="false" />
+    <list default="true" id="00e150f0-2999-4aa1-99f0-a630a4374416" name="Changes" comment="Made the following,&#10;&#10;- Move window left and right&#10;- Cycle through windows">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config_parser.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/config_parser.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/window_manager.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/window_manager.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/window_manager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/window_manager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wasd.config" beforeDir="false" afterPath="$PROJECT_DIR$/wasd.config" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -94,6 +92,11 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\photo\Projects\wasd\src" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
@@ -125,7 +128,7 @@
       <workItem from="1722049314013" duration="2676000" />
       <workItem from="1722761319170" duration="3158000" />
       <workItem from="1723278912495" duration="602000" />
-      <workItem from="1723280058848" duration="6309000" />
+      <workItem from="1723280058848" duration="7118000" />
     </task>
     <task id="LOCAL-00001" summary="Let's commit the gitignore">
       <option name="closed" value="true" />
@@ -223,11 +226,22 @@
       <option name="project" value="LOCAL" />
       <updated>1722763856654</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Made the following,&#10;&#10;- Move window left and right&#10;- Cycle through windows">
+      <option name="closed" value="true" />
+      <created>1723286538622</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1723286538622</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.config" />
   </component>
   <component name="VCPKGProject">
     <isAutomaticCheckingOnLaunch value="false" />
@@ -254,7 +268,8 @@
     <MESSAGE value="Working debounce feature" />
     <MESSAGE value="First working version" />
     <MESSAGE value="Use pthread to invoke a new thread for keyboard proc" />
-    <option name="LAST_COMMIT_MESSAGE" value="Use pthread to invoke a new thread for keyboard proc" />
+    <MESSAGE value="Made the following,&#10;&#10;- Move window left and right&#10;- Cycle through windows" />
+    <option name="LAST_COMMIT_MESSAGE" value="Made the following,&#10;&#10;- Move window left and right&#10;- Cycle through windows" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
