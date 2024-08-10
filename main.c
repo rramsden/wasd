@@ -33,6 +33,12 @@ int onKeyEvent(KeyState keyState) {
                 moveWindowLeft();
             } else if (strcmp(entries[i].command, "move right") == 0) {
                 moveWindowRight();
+            } else if (strcmp(entries[i].command, "move up") == 0) {
+                moveWindowUp();
+            } else if (strcmp(entries[i].command, "move down") == 0) {
+                moveWindowDown();
+            } else if (strcmp(entries[i].command, "cycle focus") == 0) {
+                cycleFocus();
             }
 
             return 1; // stop propogation
@@ -45,6 +51,7 @@ int onKeyEvent(KeyState keyState) {
 int main() {
     printf("Press ESC to exit\n");
 
+    initWindowManager();
     registerKeyEventCallback(onKeyEvent);
     entries = parseConfigFile("../wasd.config", &entryCount);
 

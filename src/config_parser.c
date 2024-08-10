@@ -64,6 +64,7 @@ static int mapKeyToVirtualKeyCode(const char* key) {
     else if (strcmp(key, "oem_7") == 0) return VK_OEM_7;
     else if (strcmp(key, "oem_8") == 0) return VK_OEM_8;
     else if (strcmp(key, "oem_102") == 0) return VK_OEM_102;
+    else if (strcmp(key, "backspace") == 0) return VK_BACK;
     else return toupper(key[0]); // Assuming single character keys are letters
 }
 
