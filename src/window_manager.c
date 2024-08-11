@@ -5,13 +5,12 @@
 #include <tchar.h>
 
 static HWND windowHandles[MAX_WINDOWS];
-static int windowCount = 0;
+volatile static int windowCount = 0;
 static int currentWindowIndex = 0;
 
 static const TCHAR* _excludedApplications[] = {
     TEXT("ApplicationFrameHost.exe"),
     TEXT("TextInputHost.exe"),
-    TEXT("Explorer.EXE"),
     TEXT("SystemSettings.exe")
 };
 
@@ -24,9 +23,9 @@ static BOOL _isExcludedApplication(const TCHAR* processName) {
     return FALSE;
 }
 
-static BOOL CALLBACK _EnumWindowProc(HWND hwnd, LPARAM lparam) {
+static BOOL CALLBACK _EnumWindowProc(const HWND hwnd, LPARAM lparam) {
     if (IsWindowVisible(hwnd) && windowCount < MAX_WINDOWS) {
-        LONG exStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
+        const LONG exStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
 
         if (!(exStyle & WS_EX_TOOLWINDOW) && !IsIconic(hwnd)) {
             DWORD processId;
@@ -46,13 +45,7 @@ static BOOL CALLBACK _EnumWindowProc(HWND hwnd, LPARAM lparam) {
     return TRUE;
 }
 
-void initWindowManager() {
-    if (windowCount == 0) {
-        EnumWindows(_EnumWindowProc, 0);
-    }
-}
-
-static void bringWindowToFront(HWND hwnd) {
+static void _bringWindowToFront(HWND hwnd) {
     if (IsIconic(hwnd)) {
         ShowWindow(hwnd, SW_RESTORE);
     }
@@ -60,13 +53,34 @@ static void bringWindowToFront(HWND hwnd) {
     BringWindowToTop(hwnd);
 }
 
+static int _screenWidth() {
+    RECT workArea;
+    SystemParametersInfo(SPI_GETWORKAREA, 0, &workArea, 0);
+
+    return workArea.right - workArea.left;
+}
+
+static int _screenHeight() {
+    RECT workArea;
+    SystemParametersInfo(SPI_GETWORKAREA, 0, &workArea, 0);
+
+    return workArea.bottom - workArea.top;
+}
+
+void _enumWindows() {
+    windowCount = 0;
+    EnumWindows(_EnumWindowProc, 0);
+}
+
 void cycleFocus() {
+    _enumWindows();
+
     if (windowCount > 0) {
         currentWindowIndex = (currentWindowIndex + 1) % windowCount;
         const HWND hwnd = windowHandles[currentWindowIndex];
 
         // Bring the window to the top of the Z order
-        bringWindowToFront(hwnd);
+        _bringWindowToFront(hwnd);
 
         // Set the window to the foreground
         SetForegroundWindow(hwnd);
@@ -102,21 +116,9 @@ void cycleFocus() {
     }
 }
 
-static int _screenWidth() {
-    RECT workArea;
-    SystemParametersInfo(SPI_GETWORKAREA, 0, &workArea, 0);
-
-    return workArea.right - workArea.left;
-}
-
-static int _screenHeight() {
-    RECT workArea;
-    SystemParametersInfo(SPI_GETWORKAREA, 0, &workArea, 0);
-
-    return workArea.bottom - workArea.top;
-}
-
 void tileWindowsVertically() {
+    _enumWindows();
+
     if (windowCount == 0) {
         return;
     }
@@ -128,6 +130,11 @@ void tileWindowsVertically() {
     for (int i = 0; i < windowCount; i++) {
         const HWND hwnd = windowHandles[i];
         if (hwnd) {
+            if (IsIconic(hwnd)) {
+                ShowWindow(hwnd, SW_RESTORE);
+            } else if (IsZoomed(hwnd)) {
+                ShowWindow(hwnd, SW_RESTORE);
+            }
             MoveWindow(hwnd, i * windowWidth, 0, windowWidth, screenHeight, TRUE);
         }
     }
@@ -174,7 +181,6 @@ void moveWindowDown() {
     }
 }
 
-// Function to move the currently active window to the left half of the screen
 void moveWindowLeft() {
     const HWND hwnd = GetForegroundWindow();
 

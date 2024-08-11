@@ -14,6 +14,5 @@ void moveWindowDown();
 void maximizeWindow();
 void tileWindowsVertically();
 void cycleFocus();
-void initWindowManager();
 
 #endif //WINDOW_MANAGER_H

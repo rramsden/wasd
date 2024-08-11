@@ -55,7 +55,6 @@ int onKeyEvent(KeyState keyState) {
 int main() {
     printf("Press ESC to exit\n");
 
-    initWindowManager();
     registerKeyEventCallback(onKeyEvent);
     entries = parseConfigFile("../wasd.config", &entryCount);
 
