@@ -130,6 +130,10 @@ void moveWindowUp() {
     const HWND hwnd = GetForegroundWindow();
 
     if (hwnd) {
+        if (IsZoomed(hwnd)) {
+            ShowWindow(hwnd, SW_RESTORE);
+        }
+
         RECT rect;
         GetWindowRect(hwnd, &rect);
 
@@ -157,6 +161,10 @@ void moveWindowLeft() {
     const HWND hwnd = GetForegroundWindow();
 
     if (hwnd) {
+        if (IsZoomed(hwnd)) {
+            ShowWindow(hwnd, SW_RESTORE);
+        }
+
         RECT rect;
         GetWindowRect(hwnd, &rect);
 
@@ -175,6 +183,10 @@ void moveWindowRight() {
     const HWND hwnd = GetForegroundWindow();
 
     if (hwnd) {
+        if (IsZoomed(hwnd)) {
+            ShowWindow(hwnd, SW_RESTORE);
+        }
+
         RECT rect;
         GetWindowRect(hwnd, &rect);
 
