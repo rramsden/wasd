@@ -11,7 +11,8 @@ static int currentWindowIndex = 0;
 static const TCHAR* _excludedApplications[] = {
     TEXT("ApplicationFrameHost.exe"),
     TEXT("TextInputHost.exe"),
-    TEXT("Explorer.EXE")
+    TEXT("Explorer.EXE"),
+    TEXT("SystemSettings.exe")
 };
 
 static BOOL _isExcludedApplication(const TCHAR* processName) {
@@ -27,7 +28,7 @@ static BOOL CALLBACK _EnumWindowProc(HWND hwnd, LPARAM lparam) {
     if (IsWindowVisible(hwnd) && windowCount < MAX_WINDOWS) {
         LONG exStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
 
-        if (!(exStyle & WS_EX_TOOLWINDOW)) {
+        if (!(exStyle & WS_EX_TOOLWINDOW) && !IsIconic(hwnd)) {
             DWORD processId;
             GetWindowThreadProcessId(hwnd, &processId);
             HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, processId);
@@ -113,6 +114,23 @@ static int _screenHeight() {
     SystemParametersInfo(SPI_GETWORKAREA, 0, &workArea, 0);
 
     return workArea.bottom - workArea.top;
+}
+
+void tileWindowsVertically() {
+    if (windowCount == 0) {
+        return;
+    }
+
+    const int screenWidth = _screenWidth();
+    const int screenHeight = _screenHeight();
+    const int windowWidth = screenWidth / windowCount;
+
+    for (int i = 0; i < windowCount; i++) {
+        const HWND hwnd = windowHandles[i];
+        if (hwnd) {
+            MoveWindow(hwnd, i * windowWidth, 0, windowWidth, screenHeight, TRUE);
+        }
+    }
 }
 
 void maximizeWindow() {

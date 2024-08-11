@@ -12,6 +12,7 @@ void moveWindowRight();
 void moveWindowUp();
 void moveWindowDown();
 void maximizeWindow();
+void tileWindowsVertically();
 void cycleFocus();
 void initWindowManager();
 

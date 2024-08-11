@@ -41,6 +41,8 @@ int onKeyEvent(KeyState keyState) {
                 cycleFocus();
             } else if (strcmp(entries[i].command, "window maximize") == 0) {
                 maximizeWindow();
+            } else if (strcmp(entries[i].command, "window tile vertical") == 0) {
+                tileWindowsVertically();
             }
 
             return 1; // stop propogation

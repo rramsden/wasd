@@ -20,9 +20,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="00e150f0-2999-4aa1-99f0-a630a4374416" name="Changes" comment="Add window maximize feature">
+    <list default="true" id="00e150f0-2999-4aa1-99f0-a630a4374416" name="Changes" comment="Check if windows are maximized and make them moveable">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/window_manager.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/window_manager.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/window_manager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/window_manager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wasd.config" beforeDir="false" afterPath="$PROJECT_DIR$/wasd.config" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -191,7 +194,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723358611910</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Check if windows are maximized and make them moveable">
+      <option name="closed" value="true" />
+      <created>1723358973713</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1723358973713</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -221,7 +232,8 @@
     <MESSAGE value="First working version to match keyboard events" />
     <MESSAGE value="Working debounce feature" />
     <MESSAGE value="Add window maximize feature" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add window maximize feature" />
+    <MESSAGE value="Check if windows are maximized and make them moveable" />
+    <option name="LAST_COMMIT_MESSAGE" value="Check if windows are maximized and make them moveable" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
