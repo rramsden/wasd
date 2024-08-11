@@ -101,6 +101,31 @@ void cycleFocus() {
     }
 }
 
+static int _screenWidth() {
+    RECT workArea;
+    SystemParametersInfo(SPI_GETWORKAREA, 0, &workArea, 0);
+
+    return workArea.right - workArea.left;
+}
+
+static int _screenHeight() {
+    RECT workArea;
+    SystemParametersInfo(SPI_GETWORKAREA, 0, &workArea, 0);
+
+    return workArea.bottom - workArea.top;
+}
+
+void maximizeWindow() {
+    const HWND hwnd = GetForegroundWindow();
+
+    if (hwnd) {
+        RECT workArea;
+        SystemParametersInfo(SPI_GETWORKAREA, 0, &workArea, 0);
+
+        MoveWindow(hwnd, workArea.left, workArea.top, _screenWidth(), _screenHeight(), TRUE);
+    }
+}
+
 void moveWindowUp() {
     const HWND hwnd = GetForegroundWindow();
 
@@ -108,8 +133,7 @@ void moveWindowUp() {
         RECT rect;
         GetWindowRect(hwnd, &rect);
 
-        const int screenHeight = GetSystemMetrics(SM_CYSCREEN);
-        const int newHeight = screenHeight / 2;
+        const int newHeight = _screenHeight() / 2;
 
         MoveWindow(hwnd, rect.left, 0, rect.right - rect.left, newHeight, TRUE);
     }
@@ -122,8 +146,7 @@ void moveWindowDown() {
         RECT rect;
         GetWindowRect(hwnd, &rect);
 
-        const int screenHeight = GetSystemMetrics(SM_CYSCREEN);
-        const int newHeight = screenHeight / 2;
+        const int newHeight = _screenHeight() / 2;
 
         MoveWindow(hwnd, rect.left, newHeight, rect.right - rect.left, newHeight, TRUE);
     }
@@ -137,16 +160,14 @@ void moveWindowLeft() {
         RECT rect;
         GetWindowRect(hwnd, &rect);
 
-        const int screenWidth = GetSystemMetrics(SM_CXSCREEN);
-        const int screenHeight = GetSystemMetrics(SM_CYSCREEN);
-        const int newWidth = screenWidth / 2;
+        const int newWidth = _screenWidth() / 2;
         int newLeft = rect.left - newWidth;
 
         if (newLeft < 0) {
             newLeft = 0;
         }
 
-        MoveWindow(hwnd, newLeft, 0, newWidth, screenHeight, TRUE);
+        MoveWindow(hwnd, newLeft, 0, newWidth, _screenHeight(), TRUE);
     }
 }
 
@@ -157,15 +178,13 @@ void moveWindowRight() {
         RECT rect;
         GetWindowRect(hwnd, &rect);
 
-        const int screenWidth = GetSystemMetrics(SM_CXSCREEN);
-        const int screenHeight = GetSystemMetrics(SM_CYSCREEN);
-        const int newWidth = screenWidth / 2;
+        const int newWidth = _screenWidth() / 2;
         int newLeft = rect.left + newWidth;
 
-        if (newLeft + newWidth > screenWidth) {
-            newLeft = screenWidth - newWidth;
+        if (newLeft + newWidth > _screenWidth()) {
+            newLeft = _screenWidth() - newWidth;
         }
 
-        MoveWindow(hwnd, newLeft, 0, newWidth, screenHeight, TRUE);
+        MoveWindow(hwnd, newLeft, 0, newWidth, _screenHeight(), TRUE);
     }
 }

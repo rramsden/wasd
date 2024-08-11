@@ -29,16 +29,18 @@ int onKeyEvent(KeyState keyState) {
             lastMatchTime = GetTickCount();
             printf("EXECUTE: %s\n", entries[i].command);
 
-            if (strcmp(entries[i].command, "move left") == 0) {
+            if (strcmp(entries[i].command, "window move left") == 0) {
                 moveWindowLeft();
-            } else if (strcmp(entries[i].command, "move right") == 0) {
+            } else if (strcmp(entries[i].command, "window move right") == 0) {
                 moveWindowRight();
-            } else if (strcmp(entries[i].command, "move up") == 0) {
+            } else if (strcmp(entries[i].command, "window move up") == 0) {
                 moveWindowUp();
-            } else if (strcmp(entries[i].command, "move down") == 0) {
+            } else if (strcmp(entries[i].command, "window move down") == 0) {
                 moveWindowDown();
             } else if (strcmp(entries[i].command, "cycle focus") == 0) {
                 cycleFocus();
+            } else if (strcmp(entries[i].command, "window maximize") == 0) {
+                maximizeWindow();
             }
 
             return 1; // stop propogation

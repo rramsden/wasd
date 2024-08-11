@@ -20,11 +20,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="00e150f0-2999-4aa1-99f0-a630a4374416" name="Changes" comment="Made the following,&#10;&#10;- Move window left and right&#10;- Cycle through windows">
+    <list default="true" id="00e150f0-2999-4aa1-99f0-a630a4374416" name="Changes" comment="Working debounce feature">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/window_manager.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/window_manager.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/window_manager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/window_manager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wasd.config" beforeDir="false" afterPath="$PROJECT_DIR$/wasd.config" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,22 +38,6 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;rramsden&quot;
-  }
-}</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/rramsden/wasd.git&quot;,
-    &quot;accountId&quot;: &quot;ca604976-9ada-4783-9811-401471ceab9c&quot;
-  }
-}</component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$APPLICATION_HOME_DIR$/bin/mingw/x86_64-w64-mingw32/include/winnt.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_HOME_DIR$/bin/mingw/x86_64-w64-mingw32/include/winuser.h" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectApplicationVersion">
     <option name="ide" value="CLion" />
@@ -88,15 +72,10 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "configurable.group.appearance",
+    "settings.editor.selected.configurable": "com.maddyhome.idea.vim.ui.VimEmulationConfigurable",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\photo\Projects\wasd\src" />
-    </key>
-  </component>
   <component name="RunManager">
     <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
@@ -126,9 +105,6 @@
       <workItem from="1720848160751" duration="354000" />
       <workItem from="1720940689432" duration="7761000" />
       <workItem from="1722049314013" duration="2676000" />
-      <workItem from="1722761319170" duration="3158000" />
-      <workItem from="1723278912495" duration="602000" />
-      <workItem from="1723280058848" duration="7118000" />
     </task>
     <task id="LOCAL-00001" summary="Let's commit the gitignore">
       <option name="closed" value="true" />
@@ -210,38 +186,11 @@
       <option name="project" value="LOCAL" />
       <updated>1722059395393</updated>
     </task>
-    <task id="LOCAL-00011" summary="First working version">
-      <option name="closed" value="true" />
-      <created>1722139540611</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1722139540611</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Use pthread to invoke a new thread for keyboard proc">
-      <option name="closed" value="true" />
-      <created>1722763856654</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1722763856654</updated>
-    </task>
-    <task id="LOCAL-00013" summary="Made the following,&#10;&#10;- Move window left and right&#10;- Cycle through windows">
-      <option name="closed" value="true" />
-      <created>1723286538622</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1723286538622</updated>
-    </task>
-    <option name="localTasksCounter" value="14" />
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="UnknownFeatures">
-    <option featureType="com.intellij.fileTypeFactory" implementationName="*.config" />
   </component>
   <component name="VCPKGProject">
     <isAutomaticCheckingOnLaunch value="false" />
@@ -266,10 +215,7 @@
     <MESSAGE value="Update the latest changes" />
     <MESSAGE value="First working version to match keyboard events" />
     <MESSAGE value="Working debounce feature" />
-    <MESSAGE value="First working version" />
-    <MESSAGE value="Use pthread to invoke a new thread for keyboard proc" />
-    <MESSAGE value="Made the following,&#10;&#10;- Move window left and right&#10;- Cycle through windows" />
-    <option name="LAST_COMMIT_MESSAGE" value="Made the following,&#10;&#10;- Move window left and right&#10;- Cycle through windows" />
+    <option name="LAST_COMMIT_MESSAGE" value="Working debounce feature" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

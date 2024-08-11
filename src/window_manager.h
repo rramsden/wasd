@@ -11,6 +11,7 @@ void moveWindowLeft();
 void moveWindowRight();
 void moveWindowUp();
 void moveWindowDown();
+void maximizeWindow();
 void cycleFocus();
 void initWindowManager();
 
