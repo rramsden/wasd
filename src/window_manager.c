@@ -137,7 +137,7 @@ void _enumWindows() {
 }
 
 // Function to raise and focus a window
-void _RaiseAndFocusWindow(HWND hwnd) {
+void _RaiseAndFocusWindow(const HWND hwnd) {
     // Create an input event for a mouse input
     INPUT event;
     event.type = INPUT_MOUSE;
@@ -149,10 +149,10 @@ void _RaiseAndFocusWindow(HWND hwnd) {
     event.mi.dwExtraInfo = 0;
 
     // Send an input event to our own process first so that we pass the foreground lock check
-    const UINT sent = SendInput(1, &event, sizeof(INPUT));
+    SendInput(1, &event, sizeof(INPUT));
 
     // Error ignored, as the operation is not always necessary.
-    const BOOL setWindowPos = SetWindowPos(
+    SetWindowPos(
         hwnd,
         HWND_TOP,
         0,
