@@ -9,6 +9,21 @@ static WindowHandle windowHandles[MAX_WINDOWS];
 volatile static int windowCount = 0;
 static int currentWindowIndex = 0;
 
+// Exception list for processes that are not spawned by explorer.exe
+static const TCHAR* exclusionList[] = {
+    TEXT("discord.exe"),
+    TEXT("explorer.exe")
+};
+
+static BOOL _IsProcessInExclusionList(const TCHAR* processName) {
+    for (int i = 0; i < sizeof(exclusionList) / sizeof(exclusionList[0]); i++) {
+        if (_tcsicmp(processName, exclusionList[i]) == 0) {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
 static BOOL _IsProcessSpawnedByExplorer(const DWORD processId) {
     BOOL result = FALSE;
     const HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, processId);
@@ -24,14 +39,8 @@ static BOOL _IsProcessSpawnedByExplorer(const DWORD processId) {
                         const HANDLE hParentProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, parentProcessId);
                         if (hParentProcess) {
                             TCHAR parentProcessName[MAX_PATH] = TEXT("<unknown>");
-                            TCHAR processName[MAX_PATH] = TEXT("<unknown>");
 
                             GetModuleBaseName(hParentProcess, NULL, parentProcessName, sizeof(parentProcessName) / sizeof(TCHAR));
-                            _tprintf(TEXT("Parent Process Name: %s\n"), parentProcessName);
-
-                            // print process name
-                            GetModuleBaseName(hProcess, NULL, processName, sizeof(processName) / sizeof(TCHAR));
-                            _tprintf(TEXT("Process Name: %s\n"), processName);
 
                             if (_tcsicmp(parentProcessName, TEXT("explorer.exe")) == 0) {
                                 result = TRUE;
@@ -58,30 +67,38 @@ static BOOL CALLBACK _EnumWindowProc(const HWND hwnd, LPARAM lparam) {
             GetWindowThreadProcessId(hwnd, &processId);
 
             const HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, processId);
-            if (hProcess && _IsProcessSpawnedByExplorer(processId)) {
+            if (hProcess) {
                 TCHAR processName[MAX_PATH] = TEXT("<unknown>");
                 TCHAR windowTitle[MAX_PATH] = TEXT("<unknown>");
 
                 GetModuleBaseName(hProcess, NULL, processName, sizeof(processName) / sizeof(TCHAR));
                 GetWindowText(hwnd, windowTitle, sizeof(windowTitle) / sizeof(TCHAR));
+
                 CloseHandle(hProcess);
 
-                windowHandles[windowCount].hwnd = hwnd;
-                _tcscpy(windowHandles[windowCount].processName, processName);
-                _tcscpy(windowHandles[windowCount].windowTitle, windowTitle);
-                windowHandles[windowCount].processId = processId;
-                windowHandles[windowCount].IsIconic = IsIconic(hwnd);
-                windowHandles[windowCount].IsZoomed = IsZoomed(hwnd);
-                windowHandles[windowCount].IsVisible = IsWindowVisible(hwnd);
-                GetWindowRect(hwnd, &windowHandles[windowCount].rect);
-                windowCount++;
+                // Exclude processes with no window title - these are usually system processes or the toolbar
+                if (_tcslen(windowTitle) == 0) {
+                    return TRUE;
+                }
+
+                if (_IsProcessInExclusionList(processName) || _IsProcessSpawnedByExplorer(processId)) {
+                    windowHandles[windowCount].hwnd = hwnd;
+                    _tcscpy(windowHandles[windowCount].processName, processName);
+                    _tcscpy(windowHandles[windowCount].windowTitle, windowTitle);
+                    windowHandles[windowCount].processId = processId;
+                    windowHandles[windowCount].IsIconic = IsIconic(hwnd);
+                    windowHandles[windowCount].IsZoomed = IsZoomed(hwnd);
+                    windowHandles[windowCount].IsVisible = IsWindowVisible(hwnd);
+                    GetWindowRect(hwnd, &windowHandles[windowCount].rect);
+                    windowCount++;
+                }
             }
         }
     }
     return TRUE;
 }
 
-static void _bringWindowToFront(HWND hwnd) {
+static void _bringWindowToFront(const HWND hwnd) {
     if (IsIconic(hwnd)) {
         ShowWindow(hwnd, SW_RESTORE);
     }
@@ -109,7 +126,7 @@ void _printWindowHandles() {
         const WindowHandle handle = windowHandles[i];
         const LONG exStyle = GetWindowLong(handle.hwnd, GWL_EXSTYLE);
 
-        printf("Window %d: %s - %s, IsIconic: %d, IsZoomed: %d, IsVisible: %d\n", i, handle.processName, handle.windowTitle, handle.IsIconic, handle.IsZoomed, handle.IsVisible);
+        printf("Window %d: %s - %s, IsIconic: %d, IsZoomed: %d, IsVisible: %d, Rect: (%ld,%ld,%ld,%ld)\n", i, handle.processName, handle.windowTitle, handle.IsIconic, handle.IsZoomed, handle.IsVisible, handle.rect.left, handle.rect.top, handle.rect.right, handle.rect.bottom);
     }
 }
 
@@ -117,6 +134,35 @@ void _enumWindows() {
     windowCount = 0;
     EnumWindows(_EnumWindowProc, 0);
     _printWindowHandles();
+}
+
+// Function to raise and focus a window
+void _RaiseAndFocusWindow(HWND hwnd) {
+    // Create an input event for a mouse input
+    INPUT event;
+    event.type = INPUT_MOUSE;
+    event.mi.dx = 0;
+    event.mi.dy = 0;
+    event.mi.mouseData = 0;
+    event.mi.dwFlags = 0;
+    event.mi.time = 0;
+    event.mi.dwExtraInfo = 0;
+
+    // Send an input event to our own process first so that we pass the foreground lock check
+    const UINT sent = SendInput(1, &event, sizeof(INPUT));
+
+    // Error ignored, as the operation is not always necessary.
+    const BOOL setWindowPos = SetWindowPos(
+        hwnd,
+        HWND_TOP,
+        0,
+        0,
+        0,
+        0,
+        SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW
+    );
+
+    SetForegroundWindow(hwnd);
 }
 
 void cycleFocus() {
@@ -130,12 +176,13 @@ void cycleFocus() {
         // Set the window to the foreground
         SetForegroundWindow(hwnd);
 
-        // Emulate a mouse click on the window to ensure it is focused
+        // Set the window focus
+        _RaiseAndFocusWindow(hwnd);
+
+        // Emulate a mouse action on the window to ensure it is focused
         RECT rect;
         GetWindowRect(hwnd, &rect);
         SetCursorPos((rect.left + rect.right) / 2, (rect.top + rect.bottom) / 2);
-        mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
-        mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 
         printf("Current window: %s - %s\n", windowHandles[currentWindowIndex].processName, windowHandles[currentWindowIndex].windowTitle);
     }
@@ -160,6 +207,9 @@ void tileWindowsVertically() {
             if (handler.IsZoomed) {
                 ShowWindow(hwnd, SW_RESTORE);
             }
+
+            _bringWindowToFront(hwnd);
+
             MoveWindow(hwnd, i * windowWidth, 0, windowWidth, screenHeight, TRUE);
         }
     }
