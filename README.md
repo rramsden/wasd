@@ -6,5 +6,5 @@ WASD is a lightweight tiling window manager for Windows. It is written in C and 
 
 To compile WASD you will need to have the following installed:
 
-- [MinGW](http://www.mingw.org/)
-- [CMake](https://cmake.org/)
+- MinGW
+- CMake
