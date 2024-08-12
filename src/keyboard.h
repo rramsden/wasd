@@ -12,7 +12,7 @@ typedef struct {
     bool isShiftPressed;
 } KeyState;
 
-typedef int (*KeyEventCallback)(KeyState keyState);
+typedef int (*KeyEventCallback)(const KeyState *keyState);
 
 void registerKeyEventCallback(KeyEventCallback callback);
 void startMessageLoop();

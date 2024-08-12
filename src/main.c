@@ -11,8 +11,8 @@ static ConfigEntry *entries = NULL;
 static int entryCount = 0;
 static DWORD lastMatchTime = 0;
 
-int onKeyEvent(KeyState keyState) {
-    printf("key: %d, alt: %d, ctrl: %d, shift: %d\n", keyState.keyCode, keyState.isAltPressed, keyState.isCtrlPressed, keyState.isShiftPressed);
+int onKeyEvent(const KeyState *keyState) {
+    printf("key: %d, alt: %d, ctrl: %d, shift: %d\n", keyState->keyCode, keyState->isAltPressed, keyState->isCtrlPressed, keyState->isShiftPressed);
     const DWORD currentTime = GetTickCount();
 
     // check if mapping exists in config
@@ -22,10 +22,10 @@ int onKeyEvent(KeyState keyState) {
             return 0;
         }
 
-        if (entries[i].keyCode == keyState.keyCode &&
-            entries[i].altKey == keyState.isAltPressed &&
-            entries[i].ctrlKey == keyState.isCtrlPressed &&
-            entries[i].shiftKey == keyState.isShiftPressed) {
+        if (entries[i].keyCode == keyState->keyCode &&
+            entries[i].altKey == keyState->isAltPressed &&
+            entries[i].ctrlKey == keyState->isCtrlPressed &&
+            entries[i].shiftKey == keyState->isShiftPressed) {
             lastMatchTime = GetTickCount();
             printf("EXECUTE: %s\n", entries[i].command);
 

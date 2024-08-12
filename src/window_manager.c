@@ -3,42 +3,78 @@
 #include <stdio.h>
 #include <psapi.h>
 #include <tchar.h>
+#include <tlhelp32.h>
 
-static HWND windowHandles[MAX_WINDOWS];
+static WindowHandle windowHandles[MAX_WINDOWS];
 volatile static int windowCount = 0;
 static int currentWindowIndex = 0;
 
-static const TCHAR* _excludedApplications[] = {
-    TEXT("ApplicationFrameHost.exe"),
-    TEXT("TextInputHost.exe"),
-    TEXT("SystemSettings.exe")
-};
+static BOOL _IsProcessSpawnedByExplorer(const DWORD processId) {
+    BOOL result = FALSE;
+    const HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, processId);
+    if (hProcess) {
+        PROCESSENTRY32 pe32;
+        pe32.dwSize = sizeof(PROCESSENTRY32);
+        const HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+        if (hSnapshot != INVALID_HANDLE_VALUE) {
+            if (Process32First(hSnapshot, &pe32)) {
+                do {
+                    if (pe32.th32ProcessID == processId) {
+                        const DWORD parentProcessId = pe32.th32ParentProcessID;
+                        const HANDLE hParentProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, parentProcessId);
+                        if (hParentProcess) {
+                            TCHAR parentProcessName[MAX_PATH] = TEXT("<unknown>");
+                            TCHAR processName[MAX_PATH] = TEXT("<unknown>");
 
-static BOOL _isExcludedApplication(const TCHAR* processName) {
-    for (int i = 0; i < sizeof(_excludedApplications) / sizeof(TCHAR*); i++) {
-        if (_tcscmp(processName, _excludedApplications[i]) == 0) {
-            return TRUE;
+                            GetModuleBaseName(hParentProcess, NULL, parentProcessName, sizeof(parentProcessName) / sizeof(TCHAR));
+                            _tprintf(TEXT("Parent Process Name: %s\n"), parentProcessName);
+
+                            // print process name
+                            GetModuleBaseName(hProcess, NULL, processName, sizeof(processName) / sizeof(TCHAR));
+                            _tprintf(TEXT("Process Name: %s\n"), processName);
+
+                            if (_tcsicmp(parentProcessName, TEXT("explorer.exe")) == 0) {
+                                result = TRUE;
+                            }
+                            CloseHandle(hParentProcess);
+                        }
+                        break;
+                    }
+                } while (Process32Next(hSnapshot, &pe32));
+            }
+            CloseHandle(hSnapshot);
         }
+        CloseHandle(hProcess);
     }
-    return FALSE;
+    return result;
 }
 
 static BOOL CALLBACK _EnumWindowProc(const HWND hwnd, LPARAM lparam) {
     if (IsWindowVisible(hwnd) && windowCount < MAX_WINDOWS) {
         const LONG exStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
 
-        if (!(exStyle & WS_EX_TOOLWINDOW) && !IsIconic(hwnd)) {
+        if (!(exStyle & WS_EX_TOOLWINDOW)) {
             DWORD processId;
             GetWindowThreadProcessId(hwnd, &processId);
-            HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, processId);
-            if (hProcess) {
+
+            const HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, processId);
+            if (hProcess && _IsProcessSpawnedByExplorer(processId)) {
                 TCHAR processName[MAX_PATH] = TEXT("<unknown>");
+                TCHAR windowTitle[MAX_PATH] = TEXT("<unknown>");
+
                 GetModuleBaseName(hProcess, NULL, processName, sizeof(processName) / sizeof(TCHAR));
+                GetWindowText(hwnd, windowTitle, sizeof(windowTitle) / sizeof(TCHAR));
                 CloseHandle(hProcess);
 
-                if (!_isExcludedApplication(processName)) {
-                    windowHandles[windowCount++] = hwnd;
-                }
+                windowHandles[windowCount].hwnd = hwnd;
+                _tcscpy(windowHandles[windowCount].processName, processName);
+                _tcscpy(windowHandles[windowCount].windowTitle, windowTitle);
+                windowHandles[windowCount].processId = processId;
+                windowHandles[windowCount].IsIconic = IsIconic(hwnd);
+                windowHandles[windowCount].IsZoomed = IsZoomed(hwnd);
+                windowHandles[windowCount].IsVisible = IsWindowVisible(hwnd);
+                GetWindowRect(hwnd, &windowHandles[windowCount].rect);
+                windowCount++;
             }
         }
     }
@@ -67,17 +103,26 @@ static int _screenHeight() {
     return workArea.bottom - workArea.top;
 }
 
+void _printWindowHandles() {
+    printf("Screenwidth %d, ScreenHeight %d\n", _screenWidth(), _screenHeight());
+    for (int i = 0; i < windowCount; i++) {
+        const WindowHandle handle = windowHandles[i];
+        const LONG exStyle = GetWindowLong(handle.hwnd, GWL_EXSTYLE);
+
+        printf("Window %d: %s - %s, IsIconic: %d, IsZoomed: %d, IsVisible: %d\n", i, handle.processName, handle.windowTitle, handle.IsIconic, handle.IsZoomed, handle.IsVisible);
+    }
+}
+
 void _enumWindows() {
     windowCount = 0;
     EnumWindows(_EnumWindowProc, 0);
+    _printWindowHandles();
 }
 
 void cycleFocus() {
-    _enumWindows();
-
     if (windowCount > 0) {
         currentWindowIndex = (currentWindowIndex + 1) % windowCount;
-        const HWND hwnd = windowHandles[currentWindowIndex];
+        const HWND hwnd = windowHandles[currentWindowIndex].hwnd;
 
         // Bring the window to the top of the Z order
         _bringWindowToFront(hwnd);
@@ -92,27 +137,7 @@ void cycleFocus() {
         mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
         mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 
-        // Get the process ID
-        DWORD processId;
-        GetWindowThreadProcessId(hwnd, &processId);
-
-        // Open the process
-        HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, processId);
-        if (hProcess) {
-            // Get the process name
-            TCHAR processName[MAX_PATH] = TEXT("<unknown>");
-            GetModuleBaseName(hProcess, NULL, processName, sizeof(processName) / sizeof(TCHAR));
-
-            // Get the window title
-            TCHAR windowTitle[MAX_PATH];
-            GetWindowText(hwnd, windowTitle, sizeof(windowTitle) / sizeof(TCHAR));
-
-            // Print the process name and window title
-            printf("Focused on process: %s, window title: %s\n", processName, windowTitle);
-
-            // Close the process handle
-            CloseHandle(hProcess);
-        }
+        printf("Current window: %s - %s\n", windowHandles[currentWindowIndex].processName, windowHandles[currentWindowIndex].windowTitle);
     }
 }
 
@@ -128,11 +153,11 @@ void tileWindowsVertically() {
     const int windowWidth = screenWidth / windowCount;
 
     for (int i = 0; i < windowCount; i++) {
-        const HWND hwnd = windowHandles[i];
+        const WindowHandle handler = windowHandles[i];
+        const HWND hwnd = handler.hwnd;
+
         if (hwnd) {
-            if (IsIconic(hwnd)) {
-                ShowWindow(hwnd, SW_RESTORE);
-            } else if (IsZoomed(hwnd)) {
+            if (handler.IsZoomed) {
                 ShowWindow(hwnd, SW_RESTORE);
             }
             MoveWindow(hwnd, i * windowWidth, 0, windowWidth, screenHeight, TRUE);

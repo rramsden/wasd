@@ -43,7 +43,7 @@ LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
 
         if (wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN) {
             updateKeysPressed(vkCode);
-            return keyEventCallback(pressedKey);
+            return keyEventCallback(&pressedKey);
         }
 
         if (wParam == WM_KEYUP || wParam == WM_SYSKEYUP) {
