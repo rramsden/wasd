@@ -1,4 +1,4 @@
-# WASD - Lightweight Tiling Window Manager
+# WASD - Lightweight Tiling Window Manager (TEST)
 
 WASD is a lightweight tiling window manager for Windows. It is written in C and designed to use little to no dependencies.
 
