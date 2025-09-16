@@ -19,6 +19,8 @@ typedef struct {
     bool IsIconic; // minimized
     bool IsZoomed; // maximized
     bool IsVisible; // offscreen process
+    bool IsFocused; // focused window
+    int orderIndex; // index used to remember the order of windows
 } WindowHandle;
 
 void moveWindowLeft();
@@ -28,5 +30,6 @@ void moveWindowDown();
 void maximizeWindow();
 void tileWindowsVertically();
 void cycleFocus();
+void initializeWindowOrdinals();
 
 #endif //WINDOW_MANAGER_H

@@ -15,13 +15,13 @@ int onKeyEvent(const KeyState *keyState) {
     printf("key: %d, alt: %d, ctrl: %d, shift: %d\n", keyState->keyCode, keyState->isAltPressed, keyState->isCtrlPressed, keyState->isShiftPressed);
     const DWORD currentTime = GetTickCount();
 
+    // Debounce to prevent multiple matches
+    if (currentTime - lastMatchTime < DEBOUNCE_TIME) {
+        return 0;
+    }
+
     // check if mapping exists in config
     for (int i = 0 ; i < entryCount; i++) {
-        // Debounce to prevent multiple matches
-        if (currentTime - lastMatchTime < DEBOUNCE_TIME) {
-            return 0;
-        }
-
         if (entries[i].keyCode == keyState->keyCode &&
             entries[i].altKey == keyState->isAltPressed &&
             entries[i].ctrlKey == keyState->isCtrlPressed &&
@@ -34,9 +34,9 @@ int onKeyEvent(const KeyState *keyState) {
             } else if (strcmp(entries[i].command, "window move right") == 0) {
                 moveWindowRight();
             } else if (strcmp(entries[i].command, "window move up") == 0) {
-                moveWindowUp();
+                moveWindowLeft();
             } else if (strcmp(entries[i].command, "window move down") == 0) {
-                moveWindowDown();
+                moveWindowRight();
             } else if (strcmp(entries[i].command, "cycle focus") == 0) {
                 cycleFocus();
             } else if (strcmp(entries[i].command, "window maximize") == 0) {
@@ -53,6 +53,7 @@ int onKeyEvent(const KeyState *keyState) {
 }
 
 int main() {
+    initializeWindowOrdinals();
     printf("Press ESC to exit\n");
 
     registerKeyEventCallback(onKeyEvent);

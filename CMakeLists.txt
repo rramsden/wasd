@@ -12,4 +12,6 @@ add_custom_target(run_as_admin
         WORKING_DIRECTORY ${CMAKE_PROJECT_DIR}
 )
 
-add_executable(wasd src/main.c ${SOURCES} ${HEADERS})
+add_executable(wasd src/main.c ${SOURCES} ${HEADERS}
+        src/grid.c
+        src/grid.h)
